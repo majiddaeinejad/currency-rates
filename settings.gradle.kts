@@ -17,3 +17,4 @@ rootProject.name = "Currency Rates Challenge"
 include(":app")
 include(":core:common")
 include(":core:network")
+include(":core:data")
