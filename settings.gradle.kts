@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Currency Rates Challenge"
 include(":app")
+include(":core:common")
