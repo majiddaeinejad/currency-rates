@@ -1,4 +1,4 @@
-package org.nextoptech.challenge.ui.theme
+package org.nextoptech.rates.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -24,7 +24,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun CurrencyRatesChallengeTheme(
+fun CurrencyRatesTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

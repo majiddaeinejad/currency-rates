@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.json.Json
 import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaType
-import org.nextoptech.core.common.ChallengeDispatchers.IO
+import org.nextoptech.core.common.RatesDispatchers.IO
 import org.nextoptech.core.common.Dispatcher
 import org.nextoptech.core.network.BuildConfig
 import retrofit2.Retrofit

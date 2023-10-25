@@ -1,4 +1,4 @@
-package org.nextoptech.challenge.ui.theme
+package org.nextoptech.rates.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

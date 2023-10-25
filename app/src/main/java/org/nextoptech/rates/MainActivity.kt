@@ -1,4 +1,4 @@
-package org.nextoptech.challenge
+package org.nextoptech.rates
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,20 +6,17 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
-import org.nextoptech.challenge.ui.RatesApp
-import org.nextoptech.challenge.ui.theme.CurrencyRatesChallengeTheme
+import org.nextoptech.rates.ui.RatesApp
+import org.nextoptech.rates.ui.theme.CurrencyRatesTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CurrencyRatesChallengeTheme {
+            CurrencyRatesTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),

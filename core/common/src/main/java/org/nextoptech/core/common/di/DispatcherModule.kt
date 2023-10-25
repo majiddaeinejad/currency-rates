@@ -6,8 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import org.nextoptech.core.common.ChallengeDispatchers.IO
-import org.nextoptech.core.common.ChallengeDispatchers.Default
+import org.nextoptech.core.common.RatesDispatchers.IO
+import org.nextoptech.core.common.RatesDispatchers.Default
 import org.nextoptech.core.common.Dispatcher
 
 @Module

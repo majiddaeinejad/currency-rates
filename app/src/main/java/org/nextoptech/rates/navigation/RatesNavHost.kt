@@ -1,4 +1,4 @@
-package org.nextoptech.challenge.navigation
+package org.nextoptech.rates.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

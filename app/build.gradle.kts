@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "org.nextoptech.challenge"
+    namespace = "org.nextoptech.rates"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "org.nextoptech.challenge"
+        applicationId = "org.nextoptech.rates"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

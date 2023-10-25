@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "org.nextoptech.challenge.core.data"
+    namespace = "org.nextoptech.rates.core.data"
     compileSdk = 34
 
     defaultConfig {

@@ -1,4 +1,4 @@
-package org.nextoptech.challenge
+package org.nextoptech.rates
 
 import org.junit.Test
 
