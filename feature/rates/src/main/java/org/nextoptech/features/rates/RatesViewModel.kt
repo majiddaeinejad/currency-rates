@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.stateIn
 import org.nextoptech.core.common.result.Result
 import org.nextoptech.core.common.result.asResult
 import org.nextoptech.core.data.repository.RatesRepository
+import org.nextoptech.feature.rates.R
+import org.nextoptech.features.rates.model.asUiModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -26,7 +28,7 @@ class RatesViewModel @Inject constructor(
                 when(result){
                     is Result.Error -> RatesUiState.LoadFailed
                     Result.Loading -> RatesUiState.Loading
-                    is Result.Success -> RatesUiState.Success(result.data, getCurrentTimestamp())
+                    is Result.Success -> RatesUiState.Success(result.data.asUiModel(), getCurrentTimestamp())
                 }
             }
     .stateIn(
@@ -40,6 +42,21 @@ class RatesViewModel @Inject constructor(
         val formatter = SimpleDateFormat("dd/MM/yyyy - HH:mm", Locale.getDefault())
         return "Last updated: " + formatter.format(current)
     }
+
+    fun getResourceId(name: String): Int {
+        return when(name){
+            "EURUSD" -> R.drawable.eurusd
+            "GBPJPY" -> R.drawable.gbpjpy
+            "AUDCAD" -> R.drawable.audcad
+            "JPYAED" -> R.drawable.jpyaed
+            "JPYSEK" -> R.drawable.jpysek
+            "USDGBP" -> R.drawable.usdgbp
+            "USDCAD" -> R.drawable.usdcad
+            else -> 0
+        }
+    }
+
+
 
 
 }

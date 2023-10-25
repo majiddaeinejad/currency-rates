@@ -1,9 +1,9 @@
 package org.nextoptech.features.rates
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -12,12 +12,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,17 +26,11 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.nextoptech.core.data.model.RateModel
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Date
-import java.util.Locale
+import org.nextoptech.features.rates.model.RateUiModel
 
 @Composable
 internal fun RatesRoute(
@@ -75,12 +69,14 @@ internal fun RatesScreen(
 
 @Composable
 private fun RatesBody(
-    rates: List<RateModel>,
+    rates: List<RateUiModel>,
     lastUpdate: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
     ) {
         Text(
             text = "Rates",
@@ -109,7 +105,7 @@ private fun RatesBody(
 
 @Composable
 private fun RateItem(
-    rateModel: RateModel,
+    rateModel: RateUiModel,
     modifier: Modifier = Modifier
 ){
     Row(
@@ -121,6 +117,11 @@ private fun RateItem(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        Image(
+            modifier = Modifier.size(44.dp),
+            painter = painterResource(id = rateModel.image),
+            contentDescription = rateModel.symbol
+        )
         Text(
             text = rateModel.symbol,
             style = MaterialTheme.typography.bodyLarge,
@@ -132,4 +133,5 @@ private fun RateItem(
         )
     }
 }
+
 
