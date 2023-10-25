@@ -9,6 +9,7 @@ sealed interface RatesUiState {
 
     data class Success(
         val rates: List<RateModel>,
+        val lastUpdate: String,
     ) : RatesUiState
 
 }

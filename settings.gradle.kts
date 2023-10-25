@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Currency Rates Challenge"
+rootProject.name = "Currency Rates"
 include(":app")
 include(":core:common")
 include(":core:network")
