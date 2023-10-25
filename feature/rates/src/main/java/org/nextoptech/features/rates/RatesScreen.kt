@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -61,7 +62,7 @@ internal fun RatesScreen(
     Column(modifier = modifier) {
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
         when (ratesUiState) {
-            RatesUiState.Loading -> Unit
+            RatesUiState.Loading -> ShowLoading()
             is RatesUiState.LoadFailed -> {
                 FailedResultBody(
                     message = ratesUiState.message,
@@ -86,7 +87,9 @@ private fun FailedResultBody(
     tryAgain: ()-> Unit
 ) {
     Box(
-        modifier = modifier.fillMaxSize().padding(16.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
         contentAlignment = Center,
     ){
         Column(
@@ -106,6 +109,17 @@ private fun FailedResultBody(
         }
     }
 }
+
+@Composable
+private fun ShowLoading() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        CircularProgressIndicator()
+    }
+}
+
 
 @Composable
 private fun RatesBody(
