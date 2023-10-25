@@ -33,26 +33,30 @@ class RatesViewModel @Inject constructor(
             ratesRepository.getRates()
                 .asResult()
                 .map { result ->
-                    when(result){
-                        is Result.Error -> RatesUiState.LoadFailed(
-                            result.exception?.message ?: "An Error Occurred"
-                        )
-                        Result.Loading -> RatesUiState.Loading
-                        is Result.Success -> {
-                            RatesUiState.Success(
-                                result.data.asUiModel(previousRates), getCurrentTimestamp()
-                            ).also {
-                                previousRates = result.data
-                            }
-
-                        }
-                    }
+                    createUiState(result)
                 }
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = RatesUiState.Loading,
         )
+
+    private fun createUiState(result: Result<List<RateModel>>) =
+        when (result) {
+            is Result.Error -> RatesUiState.LoadFailed(
+                result.exception?.message ?: "An Error Occurred"
+            )
+
+            Result.Loading -> RatesUiState.Loading
+            is Result.Success -> {
+                RatesUiState.Success(
+                    result.data.asUiModel(previousRates), getCurrentTimestamp()
+                ).also {
+                    previousRates = result.data
+                }
+
+            }
+        }
 
     private fun getCurrentTimestamp(): String {
         val current = Date()
