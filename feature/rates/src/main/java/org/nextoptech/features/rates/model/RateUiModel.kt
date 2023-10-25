@@ -1,33 +1,33 @@
 package org.nextoptech.features.rates.model
 
-import androidx.annotation.DrawableRes
 import org.nextoptech.core.data.model.RateModel
-import org.nextoptech.feature.rates.R
 
 data class RateUiModel(
     val symbol: String,
     val price: Double,
-    @DrawableRes val image: Int,
+    val direction: MarketDirection,
 )
 
-fun List<RateModel>.asUiModel() = this.map {
+enum class MarketDirection{
+    BULL,
+    BEAR,
+}
+
+fun List<RateModel>.asUiModel(oldList: List<RateModel>) = this.map { rateModel ->
+    val oldModel = oldList.find { oldModel ->
+        oldModel.symbol == rateModel.symbol
+    }
+
+    val direction = if ((oldModel?.price ?: 0.0) >= rateModel.price)
+        MarketDirection.BEAR
+    else
+        MarketDirection.BULL
+
     RateUiModel(
-        symbol = it.symbol,
-        price = it.price,
-        image = getResourceId(it.symbol),
+        symbol = rateModel.symbol,
+        price = rateModel.price,
+        direction = direction,
     )
 }
 
-fun getResourceId(name: String): Int {
-    return when(name){
-        "EURUSD" -> R.drawable.eurusd
-        "GBPJPY" -> R.drawable.gbpjpy
-        "AUDCAD" -> R.drawable.audcad
-        "JPYAED" -> R.drawable.jpyaed
-        "JPYSEK" -> R.drawable.jpysek
-        "USDGBP" -> R.drawable.usdgbp
-        "USDCAD" -> R.drawable.usdcad
-        else -> 0
-    }
-}
 

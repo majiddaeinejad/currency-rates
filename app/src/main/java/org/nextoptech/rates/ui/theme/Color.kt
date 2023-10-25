@@ -11,3 +11,8 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val OnSurface = Color(0xFFF9F9F9)
+
+val CaptionColor = Color(0xFFCCCCCC)
+val BearColor = Color(0xFFFE1B1B)
+val BullColor = Color(0xFF02CB16)
+

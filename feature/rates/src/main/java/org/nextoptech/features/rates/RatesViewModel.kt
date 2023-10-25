@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.nextoptech.core.common.result.Result
 import org.nextoptech.core.common.result.asResult
+import org.nextoptech.core.data.model.RateModel
 import org.nextoptech.core.data.repository.RatesRepository
 import org.nextoptech.feature.rates.R
 import org.nextoptech.features.rates.model.asUiModel
@@ -22,13 +23,22 @@ class RatesViewModel @Inject constructor(
     ratesRepository: RatesRepository,
 ) : ViewModel() {
 
+    private var previousRates = emptyList<RateModel>()
+
     val ratesUiState: StateFlow<RatesUiState> = ratesRepository.getRates()
             .asResult()
             .map { result ->
                 when(result){
                     is Result.Error -> RatesUiState.LoadFailed
                     Result.Loading -> RatesUiState.Loading
-                    is Result.Success -> RatesUiState.Success(result.data.asUiModel(), getCurrentTimestamp())
+                    is Result.Success -> {
+                        RatesUiState.Success(
+                            result.data.asUiModel(previousRates), getCurrentTimestamp()
+                        ).also {
+                            previousRates = result.data
+                        }
+
+                    }
                 }
             }
     .stateIn(

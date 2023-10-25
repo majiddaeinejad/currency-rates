@@ -27,9 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.nextoptech.feature.rates.R
+import org.nextoptech.features.rates.model.MarketDirection
 import org.nextoptech.features.rates.model.RateUiModel
 
 @Composable
@@ -40,7 +43,7 @@ internal fun RatesRoute(
     val ratesUiState by ratesViewModel.ratesUiState.collectAsStateWithLifecycle()
     RatesScreen(
         modifier = modifier,
-        ratesUiState =  ratesUiState,
+        ratesUiState = ratesUiState,
     )
 }
 
@@ -54,7 +57,9 @@ internal fun RatesScreen(
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
         when (ratesUiState) {
             RatesUiState.Loading,
-            RatesUiState.LoadFailed, -> Unit
+            RatesUiState.LoadFailed,
+            -> Unit
+
             is RatesUiState.Success -> {
                 RatesBody(
                     rates = ratesUiState.rates,
@@ -97,8 +102,8 @@ private fun RatesBody(
         Text(
             modifier = Modifier.align(CenterHorizontally),
             text = lastUpdate,
-            style = MaterialTheme.typography.labelSmall, // Adjust the style as per your requirements
-            color = Color.Gray
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.outline
         )
     }
 }
@@ -107,7 +112,7 @@ private fun RatesBody(
 private fun RateItem(
     rateModel: RateUiModel,
     modifier: Modifier = Modifier
-){
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -119,10 +124,13 @@ private fun RateItem(
     ) {
         Image(
             modifier = Modifier.size(44.dp),
-            painter = painterResource(id = rateModel.image),
+            painter = painterResource(id = getPairResourceId(rateModel.symbol)),
             contentDescription = rateModel.symbol
         )
         Text(
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 16.dp),
             text = rateModel.symbol,
             style = MaterialTheme.typography.bodyLarge,
         )
@@ -130,8 +138,51 @@ private fun RateItem(
         Text(
             text = String.format("%.4f", rateModel.price),
             style = MaterialTheme.typography.bodyMedium,
+            color = getDirectionColor(rateModel.direction),
+        )
+        Image(
+            modifier = modifier.padding(start = 5.dp),
+            painter = painterResource(id = getDirectionDrawable(rateModel.direction)),
+            contentDescription = stringResource(id = getDirectionContentDescription(rateModel.direction))
         )
     }
 }
+
+fun getPairResourceId(name: String): Int {
+    return when (name) {
+        "EURUSD" -> R.drawable.eurusd
+        "GBPJPY" -> R.drawable.gbpjpy
+        "AUDCAD" -> R.drawable.audcad
+        "JPYAED" -> R.drawable.jpyaed
+        "JPYSEK" -> R.drawable.jpysek
+        "USDGBP" -> R.drawable.usdgbp
+        "USDCAD" -> R.drawable.usdcad
+        else -> 0
+    }
+}
+
+fun getDirectionDrawable(direction: MarketDirection): Int {
+    return when(direction){
+        MarketDirection.BULL -> R.drawable.rate_up
+        MarketDirection.BEAR -> R.drawable.rate_down
+    }
+}
+
+fun getDirectionContentDescription(direction: MarketDirection): Int{
+    return when(direction){
+        MarketDirection.BULL -> R.string.market_direction_up
+        MarketDirection.BEAR -> R.string.market_direction_up
+    }
+}
+
+@Composable
+fun getDirectionColor(direction: MarketDirection): Color {
+    return when(direction){
+        MarketDirection.BULL -> MaterialTheme.colorScheme.onTertiary
+        MarketDirection.BEAR -> MaterialTheme.colorScheme.error
+    }
+
+}
+
 
 

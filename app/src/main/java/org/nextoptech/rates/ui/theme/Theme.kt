@@ -11,6 +11,10 @@ private val LightColorScheme = lightColorScheme(
     secondary = PurpleGrey40,
     tertiary = Pink40,
     onSurface = OnSurface,
+    outline = CaptionColor,
+    error = BearColor,
+    onTertiary = BullColor,
+
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
