@@ -4,12 +4,12 @@ import org.nextoptech.core.network.model.RateListNetwork
 
 data class RateModel(
     val symbol: String,
-    val rate: Double,
+    val price: Double,
 )
 
 fun RateListNetwork.asDataModel() = rates.map {
     RateModel(
         symbol = it.symbol,
-        rate = it.rate,
+        price = it.price,
     )
 }

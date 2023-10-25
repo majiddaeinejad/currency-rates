@@ -10,5 +10,5 @@ data class RateListNetwork(
 @Serializable
 data class RateNetwork(
     val symbol: String,
-    val rate: Double,
+    val price: Double,
 )

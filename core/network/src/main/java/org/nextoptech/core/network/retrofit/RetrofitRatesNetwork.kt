@@ -2,6 +2,7 @@ package org.nextoptech.core.network.retrofit
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.json.Json
@@ -14,6 +15,7 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 
 private const val RATES_BASE_URL = BuildConfig.RATES_BASE_URL
+private const val DURATION_MILLIS = 120000L
 
 class RetrofitRatesNetwork @Inject constructor(
     networkJson: Json,
@@ -30,6 +32,9 @@ class RetrofitRatesNetwork @Inject constructor(
         .create(RetrofitRatesApi::class.java)
 
     override fun getRates() = flow {
-        emit(networkApi.getRates())
+        while(true) {
+            emit(networkApi.getRates())
+            delay(DURATION_MILLIS)
+        }
     }.flowOn(ioDispatcher)
 }
