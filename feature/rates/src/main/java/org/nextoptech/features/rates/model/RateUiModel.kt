@@ -4,7 +4,7 @@ import org.nextoptech.core.data.model.RateModel
 
 data class RateUiModel(
     val symbol: String,
-    val price: Double,
+    val price: String,
     val direction: MarketDirection,
 )
 
@@ -25,7 +25,7 @@ fun List<RateModel>.asUiModel(oldList: List<RateModel>) = this.map { rateModel -
 
     RateUiModel(
         symbol = rateModel.symbol,
-        price = rateModel.price,
+        price = String.format("%.4f", rateModel.price),
         direction = direction,
     )
 }

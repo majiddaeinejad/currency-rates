@@ -2,4 +2,5 @@
 <resources>
     <string name="market_direction_up">Price goes up</string>
     <string name="market_direction_down">Price goes down</string>
+    <string name="try_again">Try Again</string>
 </resources>

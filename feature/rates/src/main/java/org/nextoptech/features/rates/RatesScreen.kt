@@ -3,6 +3,7 @@ package org.nextoptech.features.rates
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,11 +18,13 @@ import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +47,7 @@ internal fun RatesRoute(
     RatesScreen(
         modifier = modifier,
         ratesUiState = ratesUiState,
+        tryAgain = ratesViewModel::tryAgain,
     )
 }
 
@@ -51,15 +55,19 @@ internal fun RatesRoute(
 internal fun RatesScreen(
     modifier: Modifier = Modifier,
     ratesUiState: RatesUiState,
+    tryAgain: ()-> Unit,
 ) {
 
     Column(modifier = modifier) {
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
         when (ratesUiState) {
-            RatesUiState.Loading,
-            RatesUiState.LoadFailed,
-            -> Unit
-
+            RatesUiState.Loading -> Unit
+            is RatesUiState.LoadFailed -> {
+                FailedResultBody(
+                    message = ratesUiState.message,
+                    tryAgain = tryAgain
+                )
+            }
             is RatesUiState.Success -> {
                 RatesBody(
                     rates = ratesUiState.rates,
@@ -70,6 +78,33 @@ internal fun RatesScreen(
         }
     }
 
+}
+@Composable
+private fun FailedResultBody(
+    modifier: Modifier = Modifier,
+    message: String,
+    tryAgain: ()-> Unit
+) {
+    Box(
+        modifier = modifier.fillMaxSize().padding(16.dp),
+        contentAlignment = Center,
+    ){
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = CenterHorizontally
+        ) {
+            Text(
+                text = message
+            )
+            Button(
+                modifier = Modifier.padding(top = 16.dp),
+                onClick = tryAgain,
+            ){
+                Text(text = stringResource(R.string.try_again))
+            }
+
+        }
+    }
 }
 
 @Composable
@@ -136,7 +171,7 @@ private fun RateItem(
         )
 
         Text(
-            text = String.format("%.4f", rateModel.price),
+            text = rateModel.price,
             style = MaterialTheme.typography.bodyMedium,
             color = getDirectionColor(rateModel.direction),
         )
