@@ -140,7 +140,12 @@ private fun RatesBody(
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn(modifier = Modifier.weight(1f)) {
-            items(rates) { rate ->
+            items(
+                items = rates,
+                key = {
+                    it.symbol
+                }
+            ) { rate ->
                 RateItem(rate)
                 Spacer(modifier = Modifier.height(16.dp))
             }
