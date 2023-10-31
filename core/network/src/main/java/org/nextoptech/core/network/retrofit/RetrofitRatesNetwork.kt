@@ -11,6 +11,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import org.nextoptech.core.common.RatesDispatchers.IO
 import org.nextoptech.core.common.Dispatcher
 import org.nextoptech.core.network.BuildConfig
+import org.nextoptech.core.network.RatesNetworkDataSource
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -21,7 +22,7 @@ class RetrofitRatesNetwork @Inject constructor(
     networkJson: Json,
     okhttpCallFactory: Call.Factory,
     @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
-) : RetrofitRatesHelper {
+) : RatesNetworkDataSource {
     private val networkApi = Retrofit.Builder()
         .baseUrl(RATES_BASE_URL)
         .callFactory(okhttpCallFactory)
